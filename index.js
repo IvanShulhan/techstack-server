@@ -5,7 +5,7 @@ import cors from 'cors';
 
 import { router as apartmentRouter } from './routes/apartment.router.js';
 
-const PORT = config.get('port') || 5005;
+const PORT = process.env.PORT || 5005;
 
 const app = express();
 app.use(cors());
@@ -16,7 +16,7 @@ app.use('/apartments', apartmentRouter);
 (async function() {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect(config.get('mongoURL'));
+    await mongoose.connect(process.env.MONGODB_URI);
 
     app.listen(PORT, () => {
       console.log(`Server is working in port: ${PORT}`);
